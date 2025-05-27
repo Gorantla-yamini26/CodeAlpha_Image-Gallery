@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body bgcolor=cyan >
+    <div class="gallery-container">
+        <div class="main-image">
+            <img id="mainImage" src=" " alt="IMAGE GALLERY">
+        </div>
+        <div class="navigation">
+            <button id="prevBtn">Previous</button>
+            <button id="nextBtn">Next</button>
+        </div>
+        <div class="thumbnail-container">
+            <!-- Thumbnails will be generated dynamically -->
+        </div>
+    </div>
+
+    <script >
+const images = ['i5 (3).jpg', 'i4.jpg', 'i3.jpg', 'i2 (2).jpg', 'i1.jpg'];
+let currentImageIndex = 0;
+
+// Get elements
+const mainImage = document.getElementById('mainImage');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const thumbnailContainer = document.querySelector('.thumbnail-container');
+
+// Function to update main image
+function updateMainImage(index) {
+    mainImage.src = images[index];
+}
+
+// Function to create thumbnails
+function createThumbnails() {
+    images.forEach((image, index) => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = image;
+        thumbnail.classList.add('thumbnail');
+        thumbnail.onclick = () => {
+            currentImageIndex = index;
+            updateMainImage(currentImageIndex);
+        };
+        thumbnailContainer.appendChild(thumbnail);
+    });
+}
+
+// Navigation event listeners
+prevBtn.addEventListener('click', () => {
+    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+    updateMainImage(currentImageIndex);
+});
+
+nextBtn.addEventListener('click', () => {
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+    updateMainImage(currentImageIndex);
+});
+
+// Initialize
+createThumbnails();
+updateMainImage(currentImageIndex);
+</script>
+</body>
+</html>
